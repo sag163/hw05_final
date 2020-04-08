@@ -1,0 +1,29 @@
+
+{% extends "base.html" %} 
+{% block title %} Мои подписки {% endblock %}
+{% block content %}
+{% load thumbnail %}
+      
+<div class="container">
+    {% if user.is_authenticated %} 
+<div class="row">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link {% if index %}active{% endif %}" href="/">Все авторы</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if follow %}active{% endif %}" href="/follow">Избранные авторы</a>
+        </li>
+    </ul>
+</div>
+{% endif %}
+<h1> Мои подписки <h1>
+    {% for post in page %}
+    {% include "post_item.html" with post=post %}
+    {% endfor %}
+</div>
+{% if page.has_other_pages %}
+    {% include "paginator.html" with items=page paginator=paginator%}
+{% endif %}
+       
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Редактирование поста {% endblock %}
+
+ {% block content %}
+{% if post %}
+
+    <h3>Редактирование поста</h3>
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+            Сохранить пост
+    </button>
+    </form>
+
+{% else %}
+
+    <h3>Создание нового поста</h3>
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+            Создать пост
+    </button>
+    </form>
+    
+{% endif %}
+{% endblock %}
