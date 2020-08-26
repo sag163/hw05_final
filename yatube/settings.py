@@ -152,4 +152,4 @@ CACHES = {
         }
 }
 
-
+ALLOWED_HOSTS = ['*']
