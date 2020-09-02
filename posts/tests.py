@@ -4,8 +4,6 @@ from posts.models import Post, Follow
 from group.models import Group
 import time
 
-
-
 class TestYatube(TestCase):
         def setUp(self):
                 self.client = Client()

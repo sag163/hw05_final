@@ -2,7 +2,7 @@
     <a class="navbar-brand" href="/"><span style="color:red">Ya</span>tube</a>
     <nav class="my-2 my-md-0 mr-md-3">
         {% if user.is_authenticated %}
-        Пользователь: <a href="/{{ user.username }}/"><strong class="d-block text-gray-dark"> @{{ user.username }}</strong></a>
+        Пользователь: <a href="/{{ user.username }}/"><strong class="text-gray-dark"> @{{user.username}}</strong></a>
         <a class="p-2 text-dark" href="{% url 'password_change' %}">Изменить пароль</a>
         <a class="p-2 text-dark" href="{% url 'logout' %}">Выйти</a>
         <a class="p-2 text-dark" href="{% url 'new_post' %}">Новая запись</a>

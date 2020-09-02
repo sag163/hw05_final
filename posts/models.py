@@ -10,6 +10,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     group = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to='posts/', blank=True, null=True)
+    likes = models.IntegerField(verbose_name='Нравится', default=0)
+    dislikes = models.IntegerField(verbose_name='Не нравится', default=0)
    
     def __str__(self): 
         return self.text
@@ -29,3 +31,4 @@ class Follow(models.Model):
     
     def __str__(self): 
         return f'follower - {self.user} following - {self.author}'
+

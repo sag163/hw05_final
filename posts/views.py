@@ -9,7 +9,7 @@ from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 
-@cache_page(20)
+
 def index(request):
     post_list = Post.objects.select_related("author", 'group').order_by('-pub_date').all()
     paginator = Paginator(post_list, 10)
@@ -134,3 +134,23 @@ def page_not_found(request, exception):
 
 def server_error(request):
         return render(request, "misc/500.html", status=500)
+
+@login_required
+def add_like(request, username, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    post.likes += 1
+    post.save()
+    return redirect('index')
+
+
+@login_required
+def add_dislike(request, username, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    post.dislikes += 1
+    post.save()
+    return redirect('index')
+
+@login_required
+def post_delete(request, username, post_id):
+    Post.objects.filter(pk=post_id).delete()
+    return redirect('profile', username)
