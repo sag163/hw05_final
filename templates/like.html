@@ -1,0 +1,11 @@
+{% load staticfiles %}
+<a href= "{% url 'add_like' user post.id %}" role="button">
+    
+    <p><span>&#128077;</span> {{ post.likes }}</p> 
+    </a>
+
+<a href= "{% url 'add_dislike' user post.id %}" role="button">
+    <p><span>&#128078;</span>  {{ post.dislikes }} </p> 
+    </a>
+
+    

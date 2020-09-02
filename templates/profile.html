@@ -57,6 +57,14 @@
                     {% for post in page %}
                     {% include "post_item.html" with post=post %}
                     {% endfor %}
+                    {% if user == post.author %}
+                
+                    <a class="btn btn-sm text-muted" href="{% url 'post_delete' post.author.username post.id %}"
+                            role="button">
+                            Удалить
+                    </a>
+                
+                    {% endif %}
                     <!-- Конец блока с отдельным постом --> 
                     <!-- Остальные посты -->   
                 {% if page.has_other_pages %}
