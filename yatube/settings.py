@@ -11,11 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import environ
-
-
-env = environ.Env()
-environ.Env.read_env()
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -36,11 +31,8 @@ ALLOWED_HOSTS = [
         "127.0.0.1",
         "[::1]",
         "testserver",
-        "130.193.58.146",
-        "ya-tube.tk",
-        "www.ya-tube.tk",
+        "*",
 ]
-
 
 
 INSTALLED_APPS = [
@@ -55,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "debug_toolbar",
+    'rest_framework.authtoken',
     'sorl.thumbnail',
 ]
 
@@ -66,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'yatube.urls'
@@ -93,17 +88,15 @@ WSGI_APPLICATION = 'yatube.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-#    'default': {
-        'default':env.db(),
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -135,12 +128,11 @@ USE_L10N = True
 USE_TZ = True
 
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -148,18 +140,30 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Login
 
 LOGIN_URL = "/auth/login/"
-LOGIN_REDIRECT_URL = "index"
+LOGIN_REDIRECT_URL = "index" 
 # LOGOUT_REDIRECT_URL = "index"
 
-#  РїРѕРґРєР»СЋС‡Р°РµРј РґРІРёР¶РѕРє filebased.EmailBackend
+#  подключаем движок filebased.EmailBackend
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# СѓРєР°Р·С‹РІР°РµРј РґРёСЂРµРєС‚РѕСЂРёСЋ, РІ РєРѕС‚РѕСЂСѓСЋ Р±СѓРґСѓС‚ СЃРєР»Р°РґС‹РІР°С‚СЊСЃEMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+# указываем директорию, в которую будут складываться файлы писем
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 SITE_ID = 1
-
 
 CACHES = {
         'default': {
                 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         }
+}
+INTERNAL_IPS = [
+        "127.0.0.1",
+]
+
+REST_FRAMEWORK = {        
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', 
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
 }
